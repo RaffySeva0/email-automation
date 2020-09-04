@@ -1,5 +1,9 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const CsvReadableStream = require('csv-reader');
 require('dotenv').config();
+
+let inputStream = fs.createReadStream('response.csv', 'utf8');
 
 // Step 1
 const transporter = nodemailer.createTransport({
@@ -10,22 +14,38 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Step 2
-const mailOptions = {
-  from: '"no-reply" hatchitcommunity@gmail.com',
-  to: 'krizzaseva@gmail.com',
-  subject: 'HATCHIT COMMUNITY',
-  html: createEmailOutput(),
-};
+inputStream
+  .pipe(
+    new CsvReadableStream({
+      parseNumbers: true,
+      parseBooleans: true,
+      trim: true,
+      skipHeader: true,
+    })
+  )
+  .on('data', function (row) {
+    let email = row[1];
 
-// Step 3
-transporter.sendMail(mailOptions, (err, data) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Email sent');
-  }
-});
+    // Step 2
+    const mailOptions = {
+      from: '"no-reply" hatchitcommunity@gmail.com',
+      to: row[1],
+      subject: 'HATCHIT COMMUNITY',
+      html: createEmailOutput(),
+    };
+
+    // Step 3
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Email sent to:', email);
+      }
+    });
+  })
+  .on('end', function (data) {
+    console.log('No more rows!');
+  });
 
 function createEmailOutput() {
   return `<!DOCTYPE html>

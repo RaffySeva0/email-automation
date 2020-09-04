@@ -9,6 +9,7 @@
   "author": "Raffy",
   "license": "ISC",
   "dependencies": {
+    "csv-reader": "^1.0.6",
     "dotenv": "^8.2.0",
     "nodemailer": "^6.4.11"
   }
