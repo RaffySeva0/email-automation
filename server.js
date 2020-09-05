@@ -356,10 +356,10 @@ function createEmailOutput() {
                                         color: #ffffff;
                                         text-decoration: none;
                                         background-color: #fabe6e;
-                                        border-top: 15px solid #ffc982;
-                                        border-bottom: 15px solid #ffc982;
-                                        border-left: 25px solid #ffc982;
-                                        border-right: 25px solid #ffc982;
+                                        border-top: 15px solid #fabe6e;
+                                        border-bottom: 15px solid #fabe6e;
+                                        border-left: 25px solid #fabe6e;
+                                        border-right: 25px solid #fabe6e;
                                         border-radius: 3px;
                                         -webkit-border-radius: 3px;
                                         -moz-border-radius: 3px;
